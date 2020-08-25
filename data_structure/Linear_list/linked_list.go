@@ -188,11 +188,14 @@ func delNodeqPoint(head *linkList, q *linkList) {
 	/*if head == q{         无头结点，要讨论此情况
 		head = q.link
 	}*/
-	p := head
-	for p.link != nil && p.link != q {
+	r := head
+	p := head.link
+	for p != nil && p != q {
+		fmt.Println("9999999999999999999999999", p.data)
+		r = p //r指向上一轮for循环p指向的节点
 		p = p.link
 	}
-	p.link = q.link
+	r.link = q.link
 }
 
 func delAllDataIsTwoNode(head *linkList, item ElemType) {
@@ -268,6 +271,27 @@ func copyLinkList(head3 *linkList) (head4 *linkList) {
 	return
 }
 
+func moveMaxToRear(head *linkList) {
+	r, q := head, head
+	s, p := head.link, head.link
+
+	for p != nil {
+		if q.data <= p.data {
+			s = r //最大值前驱
+			q = p //最大值节点
+		}
+		r = p
+		p = p.link
+	}
+	/* 如果最大值节点不是最后一个节点才进行处理,跳出循环时p已经指向链表最后一个节点的下一个空位置
+	，所以用r，它时p的前一个节点此时也就是最后一个节点*/
+	if q != r {
+		s.link = q.link
+		r.link = q
+		q.link = nil
+	}
+
+}
 func main() {
 	head := createLinkedhead(3) //main.linkList
 	fmt.Println("11111", &head)
@@ -295,19 +319,28 @@ func main() {
 	treavlhead(head)
 
 	q = head.link
-	q = head.link.link
+	//q = head.link.link
 	//q = head.link.link.link.link.link.link.link
 	fmt.Println("\nNow, Deletes a node  q pointed")
 	delNodeqPoint(&head, q)
 	treavlhead(head)
 
 	delAllDataIsTwoNode(&head, -1)
-	fmt.Println("\nNow, Deletes a node whose data fiels is negative one")
+	fmt.Println("\nNow, Deletes a node whose data file is negative one")
 	treavlhead(head)
 
 	reverseLinkList(&head)
 	fmt.Println("\nNow, Reverse a linked list ")
 	treavlhead(head)
+
+	moveMaxToRear(&head)
+	fmt.Println("\nNow, Move the maximum to the end ")
+	treavlhead(head)
+
+	/*测试最后一节点时最大值时的情况
+	moveMaxToRear(&head)
+	fmt.Println("\nNow, Move the maximum to the end ")
+	treavlhead(head)*/
 
 	insertList := []ElemType{1, 3, 5, 7}
 	head1 := createLinkedhead1(insertList) //main.linkList,This is a order link list
