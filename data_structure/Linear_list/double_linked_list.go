@@ -32,8 +32,18 @@ func insertByData(head *doubleLinkList, x doubleElemType, item doubleElemType) (
 	return s
 }
 
-func delete() {
-
+func deleteByData(head *doubleLinkList, x doubleElemType) {
+	r := head
+	p := head.rlink
+	for p != nil && p.data != x {
+		r = p
+		p = p.rlink
+	}
+	if p != nil {
+		r.rlink = p.rlink
+		p.rlink.llink = r
+	} else {
+	}
 }
 func createDoubleList(head *doubleLinkList, initList []int) {
 	p := head
@@ -84,6 +94,9 @@ func main() {
 	insertByData(&head, 2, 0)
 	treavlList(head)
 
+	fmt.Print("\nNow ,we delete node which data is 0,")
+	deleteByData(&head, 0)
+	treavlList(head)
 	//x =
 	//insert(head,x,item)
 }
