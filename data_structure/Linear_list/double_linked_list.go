@@ -97,6 +97,5 @@ func main() {
 	fmt.Print("\nNow ,we delete node which data is 0,")
 	deleteByData(&head, 0)
 	treavlList(head)
-	//x =
-	//insert(head,x,item)
+
 }
